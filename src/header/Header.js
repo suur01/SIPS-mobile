@@ -73,13 +73,15 @@ const HeaderType2 = ({ openDrawer, namaPasien }) => {
             }}>
 
                 {/* Konten di bagian atas */}
-                <Card style={{ marginTop: 15, height: 115, width: '90%', backgroundColor: '#FAFAFA', alignItems: 'center', justifyContent: 'center' }}>
-                    <Card.Content>
-                    <View style={{ width: 80, height: 80, borderRadius: 40, overflow: 'hidden', marginBottom: 10 }}>
+                <Card style={{ marginTop: 65, height: 160, width: '90%', backgroundColor: '#FAFAFA', alignItems: 'center', justifyContent: 'center' }}>
+                    <Card.Content style={{ alignItems: 'center' }}>
+                        <View style={{ width: 80, height: 80, borderRadius: 40, overflow: 'hidden', marginBottom: 10 }}>
                         {/* Gambar profil lingkaran */}
                         <Image source={require('../assets/image/sips.png')} style={{ width: '100%', height: '100%', borderRadius: 40 }} />
-                    </View>
-                    
+                        </View>
+                        {/* Teks di bawah gambar */}
+                        <Text style={{ fontSize: 22, textAlign: 'center' }}>Profile</Text>
+                        <Text style={{ fontSize: 19, paddingTop: 5, textAlign: 'center' }}>{namaPasien}</Text>
                     </Card.Content>
                 </Card>
 
