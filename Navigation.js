@@ -73,6 +73,17 @@ function MyTabs() {
                 />
 
                 <Tab.Screen 
+                    name="Detail" 
+                    component={Profile} 
+                    options={{
+                        tabBarIcon: ({ color, size,focused }) => (
+                            <MaterialCommunityIcons name="flask" color={focused ? '#ffffff' : '#EEF88A'} size={size} />
+                        ),
+                        tabBarActiveTintColor:'#ffffff'
+                    }}
+                />
+
+                <Tab.Screen 
                     name="Profile" 
                     component={Profile} 
                     options={{
@@ -96,14 +107,13 @@ function MyDrawer() {
             <Drawer.Screen 
                 name="MyTabs" 
                 component={MyTabs} 
-                screenOptions={{headerShown: false}} 
                 options={{
                     drawerItemStyle: { height: 0 }
                 }} 
             /> 
-            <Drawer.Screen name="Help" component={Help} screenOptions={{headerShown: true}} />
+            <Drawer.Screen name="Help" component={Help} options={{headerShown: false}} />
+            <Drawer.Screen name="Help2" component={Help} options={{headerShown: false}} />
         </Drawer.Navigator>
-        
 
     );
 }

@@ -1,26 +1,18 @@
-import * as React from 'react';
-import {
-  Button,
-  View,
-  Text,
-  SafeAreaView
-} from 'react-native';
+import React from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-const Help = ({ navigation }) => {
+const Help = () => {
+  const navigation = useNavigation();
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1 , padding: 16}}>
-        <View
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-            <Text>Detail</Text>
-          </View>
-      </View>
-    </SafeAreaView>
+    <View>
+      <Text>Isi Layar Help</Text>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Text>Kembali</Text>
+      </TouchableOpacity>
+    </View>
   );
-}
+};
 
 export default Help;

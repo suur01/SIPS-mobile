@@ -3,13 +3,18 @@ import { View,Image, TouchableOpacity } from 'react-native';
 import { Card, Text } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/FontAwesome';
 
-const HeaderType1 = ({ openDrawer, namaPasien }) => {
+const HeaderType1 = ({ openDrawer, namaPasien, rekamMedik }) => {
+
+    const commonStyles = {
+        textColor: '#149581'
+      };
+
     return (
         <View>
 
             <View style={{
-                height: 100,
-                backgroundColor: '#149581',
+                    height: 100,
+                    backgroundColor: '#149581',
                 }}>
 
                 <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', paddingLeft:20, paddingRight: 20, paddingTop: 16 }}>
@@ -28,14 +33,16 @@ const HeaderType1 = ({ openDrawer, namaPasien }) => {
                 borderBottomRightRadius: 35,
                 justifyContent: 'center',  // Center secara vertical
                 alignItems: 'center',      // Center secara horizontal
-                marginBottom:-10
+                marginBottom:-10,
+                
             }}>
 
                 {/* Konten di bagian atas */}
-                <Card style={{ marginTop: 15, height: 115, width: '90%', backgroundColor: '#FAFAFA' }}>
+                <Card style={{ marginTop: 15, height: 115, width: '90%', backgroundColor: '#FCFDFC' }}>
                     <Card.Content>
-                    <Text style={{ fontSize:22 }}>Selamat Datang</Text>
-                    <Text style={{ fontSize:19, paddingTop:15 }}>{namaPasien}</Text>
+                    <Text style={{ fontSize:22, color: commonStyles.textColor }}>Selamat Datang</Text>
+                    <Text style={{ fontSize:16, paddingTop:10, color: commonStyles.textColor }}>{namaPasien}</Text>
+                    <Text style={{ fontSize:15, paddingTop:5 , color: commonStyles.textColor }}>Nomor Rekam Medik : {rekamMedik}</Text>
                     </Card.Content>
                 </Card>
 
@@ -73,7 +80,7 @@ const HeaderType2 = ({ openDrawer, namaPasien }) => {
             }}>
 
                 {/* Konten di bagian atas */}
-                <Card style={{ marginTop: 65, height: 160, width: '90%', backgroundColor: '#FAFAFA', alignItems: 'center', justifyContent: 'center' }}>
+                <Card style={{ marginTop: 65, height: 160, width: '90%', backgroundColor: '#FCFDFC', alignItems: 'center', justifyContent: 'center' }}>
                     <Card.Content style={{ alignItems: 'center' }}>
                         <View style={{ width: 80, height: 80, borderRadius: 40, overflow: 'hidden', marginBottom: 10 }}>
                         {/* Gambar profil lingkaran */}
@@ -90,8 +97,8 @@ const HeaderType2 = ({ openDrawer, namaPasien }) => {
     );
 };
 
-const Header = ({ type, namaPasien, openDrawer }) => {
-    return type === 1 ? <HeaderType1 namaPasien={namaPasien} openDrawer={openDrawer} /> : <HeaderType2 openDrawer={openDrawer} />;
+const Header = ({ type, namaPasien, rekamMedik, openDrawer }) => {
+    return type === 1 ? <HeaderType1 namaPasien={namaPasien} rekamMedik={rekamMedik} openDrawer={openDrawer} /> : <HeaderType2 openDrawer={openDrawer} />;
 };
 
 export default Header;

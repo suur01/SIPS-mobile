@@ -1,22 +1,49 @@
-import * as React from 'react';
+import React, { useState,useEffect } from 'react';
 import {
     Button,
     View,
     Text,
     SafeAreaView,
     ScrollView,
-    TouchableOpacity
+    TouchableOpacity,
+    
 } from 'react-native';
 
-import { Card } from 'react-native-paper';
+import { Card, Title, Paragraph } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import Header from '../header/Header';
 
 
-
 const HomeScreen = ({ navigation }) => {
+
+    useEffect(() => {
+        // Panggil fungsi untuk mengambil data saat komponen dimount
+        getData();
+    }, []);
+
+    const [dataPasien, setDataPasien] = useState('');
+
+    // Mengambil data dari AsyncStorage
+        const getData = async () => {
+            try {
+                const jsonString = await AsyncStorage.getItem('LOGIN_dataPasien');
+
+                if (jsonString !== null) {
+                    const DataPasien = JSON.parse(jsonString);
+                    setDataPasien(DataPasien);
+                    console.log('Data berhasil diambil:', DataPasien.datapasien.agama);
+                } else {
+                    console.log('Data tidak ditemukan di AsyncStorage');
+                }
+            } catch (e) {
+                console.error('Error saat mengambil data:', e);
+            }
+        };
+    // Mengambil data dari AsyncStorage
+    
 
     const openDrawer = () => {
         navigation.openDrawer();
@@ -25,90 +52,86 @@ const HomeScreen = ({ navigation }) => {
 return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
 
-            {/* <View style={{
-                height: 50,
-                backgroundColor: '#149581',
-                }}>
-
-                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', paddingLeft:20, paddingRight: 20, paddingTop: 16 }}>
-                    <TouchableOpacity onPress={openDrawer}>
-                        <MaterialCommunityIcons name="bars" color="white" size={24} />
-                    </TouchableOpacity>
-                    <MaterialCommunityIcons name="flask" color="white" size={24} />
-                </View>
-
-            </View> 
-
-            <View style={{
-                height: '10%',
-                backgroundColor: '#149581',
-                borderBottomLeftRadius: 35,
-                borderBottomRightRadius: 35,
-                justifyContent: 'center',  // Center secara vertical
-                alignItems: 'center',      // Center secara horizontal
-                marginBottom:70
-            }}>
-
-                <Card style={{ marginTop: 65, height: 115, width: '90%', backgroundColor: '#FAFAFA' }}>
-                    <Card.Content>
-                    <Text style={{ fontSize:22 }}>Selamat Datang</Text>
-                    <Text style={{ fontSize:19, paddingTop:15 }}>Nama Pasien</Text>
-                    </Card.Content>
-                </Card>
-
-            </View> */}
-
-            <Header type={1} namaPasien="ITKI" openDrawer={openDrawer} />
-
-    {/* Bagian bawah dengan background putih (70%) */}
+        <Header 
+            type={1} 
+            namaPasien={dataPasien && dataPasien.datapasien && dataPasien.datapasien.nama_pasien}
+            rekamMedik={dataPasien && dataPasien.datapasien && dataPasien.datapasien.no_rekam_medik} 
+            openDrawer={openDrawer} 
+        />
 
         <View style={{ flex: 1, backgroundColor: 'white', padding: 20, marginTop: 0 }}>
-        {/* Kartu pertama di bagian bawah */}
-        <Card style={{ marginBottom: 16, backgroundColor: '#FAFAFA', height:'88%',paddingTop:1, paddingBottom:15 }}>
-            <ScrollView 
-                contentContainerStyle={{ flexGrow: 1 }}
-                showsVerticalScrollIndicator={false}
-                showsHorizontalScrollIndicator={false}
-            >
-                <Card.Content>
-                    {/* Isi Card */}
-                    <Text variant="titleLarge">Another Card title</Text>
-                    <Text variant="bodyMedium">Another Card content</Text>
-                    <Text variant="titleLarge">Another Card title</Text>
-                        <Text variant="bodyMedium">Another Card content</Text>
-                        <Text variant="bodyMedium">Another Card content</Text>
-                        <Text variant="bodyMedium">Another Card content</Text>
-                        <Text variant="bodyMedium">Another Card content</Text>
-                        <Text variant="bodyMedium">Another Card content</Text>
-                        <Text variant="bodyMedium">Another Card content</Text>
-                        <Text variant="bodyMedium">Another Card content</Text>
-                        <Text variant="bodyMedium">Another Card content</Text>
-                        <Text variant="bodyMedium">Another Card content</Text>
-                        <Text variant="bodyMedium">Another Card content</Text>
-                        <Text variant="bodyMedium">Another Card content</Text>
-                        <Text variant="bodyMedium">Another Card content</Text>
-                        <Text variant="bodyMedium">Another Card content</Text>
-                        <Text variant="bodyMedium">Another Card content</Text>
-                        <Text variant="bodyMedium">Another Card content</Text>
-                        <Text variant="bodyMedium">Another Card content</Text>
-                        <Text variant="bodyMedium">Another Card content</Text>
-                        <Text variant="bodyMedium">Another Card content</Text>
-                        <Text variant="bodyMedium">Another Card content</Text>
-                        <Text variant="bodyMedium">Another Card content</Text>
-                        <Text variant="bodyMedium">Another Card content</Text>
-                        <Text variant="bodyMedium">Another Card content</Text>
-                        <Text variant="bodyMedium">Another Card content</Text>
-                        <Text variant="bodyMedium">Another Card content</Text>
-                        <Text variant="bodyMedium">Another Card content</Text>
-                        <Text variant="bodyMedium">Another Card content</Text>
-                        <Text variant="bodyMedium">Another Card content</Text>
-                    {/* ... konten lainnya ... */}
-                </Card.Content>
-            </ScrollView>
-        </Card>
+            {/* Kartu pertama di bagian bawah */}
+            <Card style={{ marginBottom: 16, backgroundColor: '#FCFDFC', height:'88%',paddingTop:1, paddingBottom:15 }}>
+                <ScrollView 
+                    contentContainerStyle={{ flexGrow: 1 }}
+                    showsVerticalScrollIndicator={false}
+                    showsHorizontalScrollIndicator={false}
+                >
+                    <Card.Content>
+                        {/* Header Card */}
+                        
+                        <Paragraph style={{ marginBottom: 10 }}>
+                            <Text variant="bodyMedium" style={{ fontSize: 17, color: 'black' }}>NAMA PASIEN</Text>{'\n'}
+                            <Text variant="bodyMedium" style={{ fontSize: 13, color: 'black' }}>
+                                {dataPasien && dataPasien.datapasien && dataPasien.datapasien.nama_pasien}
+                            </Text>
+                        </Paragraph>
+
+                        <Paragraph style={{ marginBottom: 10 }}>
+                            <Text variant="bodyMedium" style={{ fontSize: 17, color: 'black' }}>NO REKAM MEDIK</Text>{'\n'}
+                            <Text variant="bodyMedium" style={{ fontSize: 13, color: 'black' }}>
+                                {dataPasien && dataPasien.datapasien && dataPasien.datapasien.no_rekam_medik}
+                            </Text>
+                        </Paragraph>
+
+                        <Paragraph style={{ marginBottom: 10 }}>
+                            <Text variant="bodyMedium" style={{ fontSize: 16, color: 'black' }}>KTP / ID Card</Text>{'\n'}
+                            <Text variant="bodyMedium" style={{ fontSize: 13, color: 'black' }}>
+                                {dataPasien && dataPasien.datapasien && dataPasien.datapasien.no_ktp}
+                            </Text>
+                        </Paragraph>
+
+                        <Paragraph style={{ marginBottom: 10 }}>
+                            <Text variant="bodyMedium" style={{ fontSize: 16, color: 'black' }}>AGAMA</Text>{'\n'}
+                            <Text variant="bodyMedium" style={{ fontSize: 13, color: 'black' }}>
+                                {dataPasien && dataPasien.datapasien && dataPasien.datapasien.agama}
+                            </Text>
+                        </Paragraph>
+
+                        <Paragraph style={{ marginBottom: 10 }}>
+                            <Text variant="bodyMedium" style={{ fontSize: 16, color: 'black' }}>STATUS KAWIN</Text>{'\n'}
+                            <Text variant="bodyMedium" style={{ fontSize: 13, color: 'black' }}>
+                                {dataPasien && dataPasien.datapasien && dataPasien.datapasien.statusperkawinan}
+                            </Text>
+                        </Paragraph>
+
+                        <Paragraph style={{ marginBottom: 10 }}>
+                            <Text variant="bodyMedium" style={{ fontSize: 16, color: 'black' }}>PROVINSI</Text>{'\n'}
+                            <Text variant="bodyMedium" style={{ fontSize: 13, color: 'black' }}>
+                                {dataPasien && dataPasien.datapasien && dataPasien.datapasien.propinsi_nama}
+                            </Text>
+                        </Paragraph>
+
+                        <Paragraph style={{ marginBottom: 10 }}>
+                            <Text variant="bodyMedium" style={{ fontSize: 16, color: 'black' }}>KAB / KOTA</Text>{'\n'}
+                            <Text variant="bodyMedium" style={{ fontSize: 13, color: 'black' }}>
+                                {dataPasien && dataPasien.datapasien && dataPasien.datapasien.kabupaten_nama}
+                            </Text>
+                        </Paragraph>
+
+                        <Paragraph style={{ marginBottom: 10 }}>
+                            <Text variant="bodyMedium" style={{ fontSize: 16, color: 'black' }}>KECAMATAN</Text>{'\n'}
+                            <Text variant="bodyMedium" style={{ fontSize: 13, color: 'black' }}>
+                                {dataPasien && dataPasien.datapasien && dataPasien.datapasien.kecamatan_nama}
+                            </Text>
+                        </Paragraph>
+
+                        
+                    </Card.Content>
+                </ScrollView>
+            </Card>
         </View>
     
-
     
     </View>
 );
