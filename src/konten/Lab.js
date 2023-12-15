@@ -18,14 +18,29 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import Header from '../header/Header';
 
+import radiologiImage from '../assets/image/radiologi.png';
+import pkImage from '../assets/image/pk.png';
+import mikrobiologiImage from '../assets/image/mikrobiologi.png';
+import patologiImage from '../assets/image/pa.png';
+
+// const dataArray = [
+//   { id: 1, content: 'Hasil Radiologi',        link:'radiologi', imge:radiologi },
+//   { id: 2, content: 'Hasil Patologi Klinik',  link:'radiologi', imge:pk },
+//   { id: 3, content: 'Hasil Mikrobiologi',     link:'radiologi', imge:mikrobiologi },
+//   // { id: 4, content: 'Hasil Patologi Anatomi', link:'radiologi', imge:'../assets/image/pa.png' },
+//   // { id: 5, content: 'Card 3 Content',         link:'radiologi', imge:'../assets/image/radiologi.png' },
+//   // { id: 6, content: 'Card 3 Content',         link:'radiologi', imge:'../assets/image/sips.png' },
+// ];
+
 const dataArray = [
-  { id: 1, content: 'Hasil Radiologi',        imge:'../assets/image/radiologi.png' },
-  { id: 2, content: 'Hasil Patologi Klinik',  imge:'../assets/image/pk.png' },
-  { id: 3, content: 'Hasil Mikrobiologi',     imge:'../assets/image/mikrobiologi.png' },
-  { id: 4, content: 'Hasil Patologi Anatomi', imge:'../assets/image/pa.png' },
-  { id: 5, content: 'Card 3 Content',         imge:'../assets/image/radiologi.png' },
-  { id: 6, content: 'Card 3 Content',         imge:'../assets/image/sips.png' },
+  { id: 1, content: 'Hasil Radiologi',        link: 'radiologi', imge: radiologiImage },
+  { id: 2, content: 'Hasil Patologi Klinik',  link: 'radiologi', imge: pkImage },
+  { id: 3, content: 'Hasil Mikrobiologi',     link: 'radiologi', imge: mikrobiologiImage },
+  { id: 4, content: 'Hasil Patologi Anatomi', link: 'radiologi', imge: patologiImage },
+  { id: 5, content: 'Hasil Patologi Anatomi', link: 'radiologi', imge: patologiImage },
+  { id: 6, content: 'Hasil Patologi Anatomi', link: 'radiologi', imge: patologiImage },
 ];
+
 
 const Lab = ({ navigation }) => {
 
@@ -36,8 +51,9 @@ const Lab = ({ navigation }) => {
 
   const [dataPasien, setDataPasien] = useState('');
 
-  const openImage = (content) => {
+  const PindahHalaman = (navigation,content) => {
     console.log('Opening image for:', content);
+    navigation.navigate(content);
     // Add your logic to display the image here
   };
 
@@ -86,45 +102,35 @@ const Lab = ({ navigation }) => {
             openDrawer={openDrawer} 
         />
 
-      <ScrollView 
-        contentContainerStyle={{ flexGrow: 1 }}
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-        style={{ marginBottom: 20 }}
-      >
-        <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white', padding: 20, marginTop: 0 }}>
-          {groupedData.map((row, rowIndex) => (
-            <View key={rowIndex} style={{ flexDirection: 'row', height: rowHeight, marginBottom: 10 }}>
-              {row.map(item => (
+        <ScrollView 
+                  contentContainerStyle={{ flexGrow: 1 }}
+                  showsVerticalScrollIndicator={false}
+                  showsHorizontalScrollIndicator={false}
+                  style={{ marginBottom: 20 }}
+                >
 
+              <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white', padding: 10, marginLeft: 10 }}>
 
+                {groupedData.map((row, rowIndex) => (
 
-                <Card key={item.id} style={{ flex: 1, marginRight: 10, backgroundColor: '#FCFDFC' }}>
+                  <View key={rowIndex} style={{ flexDirection: 'row', height: rowHeight, marginBottom: 10, }}>
+                    {row.map(item => (
+                      <Card key={item.id} style={{ flex: 1, marginRight: 10, backgroundColor: '#FCFDFC' }}>
+                        <TouchableOpacity key={item.id} onPress={() => PindahHalaman(navigation, item.link)}>
+                          <Card.Content style={{ alignItems: 'center', marginTop: 38 }}>
+                            <Image source={item.imge} style={{ width: 60, height: 60, paddingTop: 20 }} />
+                            <Text style={styles.Text}>{item.content}</Text>
+                          </Card.Content>
+                        </TouchableOpacity>
+                      </Card>
+                    ))}
+                  </View>
 
-                  <TouchableOpacity key={item.id} onPress={() => openImage(item.imge)}> 
+                ))}
 
-                    <Card.Content>
-                      {/* <Image source={{ uri :`${item.imge}` }} style={{ width: 50, height: 50, marginBottom: 10 }} /> */}
-                      <Image source={item.imge} style={{ width: 50, height: 50 }} />
-                      <Image source={require('../assets/image/sips.png')} style={{ width: 50, height: 50 }} />
-                      <Text style={styles.Text}>{item.content}</Text>
-                      {/* <Text>{item.imge}</Text> */}
-                    </Card.Content>
+              </View>
 
-                  </TouchableOpacity>
-
-                </Card>
-
-
-
-              ))}
-            </View>
-          ))}
-        </View>
-      </ScrollView>
-
-
-
+        </ScrollView>
 
 
     </View>
@@ -136,6 +142,7 @@ const styles = StyleSheet.create({
     color:'#0E9971',
     justifyContent: 'center',
     alignItems: 'center', 
+    fontSize: 14,
   }
   
 })

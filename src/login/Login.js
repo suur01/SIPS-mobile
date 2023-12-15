@@ -21,6 +21,7 @@ const MyFormLogin = ({ navigation }) => {
         const [password, setpassword]       = useState('A1dfasdfsdf');
 
         let dataPasien = ''
+        let token      = ''
 
         const handleLogin = async () => {
 
@@ -38,6 +39,7 @@ const MyFormLogin = ({ navigation }) => {
             baseURL.post('login',data)
             .then(response => {
                 dataPasien = response.data.response;
+                token      = response.data;
                 // AsyncStorage.setItem('LOGIN_dataPasien', dataPasien);
                 storeData()
 
@@ -53,9 +55,10 @@ const MyFormLogin = ({ navigation }) => {
 
         // Menyimpan string di AsyncStorage
             const storeData = async () => {
+                    const token              = JSON.stringify(token);
                     const jsonDataPasien     = JSON.stringify(dataPasien);
-                    const jsonEnkripPasienid = JSON.stringify(dataPasien.datapasien)
-                    console.log('pasien id',dataPasien.datapasien)
+                    const jsonEnkripPasienid = JSON.stringify(dataPasien.datapasien.pasien_id_encrypted)
+                    console.log('pasien id',token)
                 try {
                     await AsyncStorage.setItem('LOGIN_dataPasien', jsonDataPasien);
                     await AsyncStorage.setItem('LOGIN_dataPasienIdEncrypted', jsonEnkripPasienid);

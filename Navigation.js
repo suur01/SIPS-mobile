@@ -11,6 +11,8 @@ import Help        from './src/konten/Help';
 import Lab         from './src/konten/Lab';
 import Profile     from './src/konten/Profile';
 
+import radiologi     from './src/hasilLab/radiologi/Radiologi';
+
 const Stack     = createNativeStackNavigator();
 const Drawer    = createDrawerNavigator();
 const Tab       = createBottomTabNavigator();
@@ -23,6 +25,11 @@ function MenuNavigasi() {
             <Stack.Screen
                 name="login"
                 component={login}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="radiologi"
+                component={radiologi}
                 options={{ headerShown: false }}
             />
         </Stack.Navigator>
