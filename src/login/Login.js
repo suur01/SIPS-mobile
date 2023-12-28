@@ -5,11 +5,15 @@ import { View,
         TouchableOpacity, 
         Text, 
         StyleSheet,
+        ActivityIndicator
         } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import baseURL from '../../baseURL';
+
+import SkeletonLoading from '../loading/skeleton';
+
 
 const MyFormLogin = ({ navigation }) => {
         // State untuk menyimpan nilai input
@@ -18,11 +22,13 @@ const MyFormLogin = ({ navigation }) => {
         const [rekamMedik, setrekamMedik]   = useState('13025279');
         const [password, setpassword]       = useState('A1dfasdfsdf');
 
+        const [isLoading, setIsLoading] = useState(false);
+
         let dataPasien = ''
         let token      = ''
 
         const handleLogin = async () => {
-
+            setIsLoading(true)
             const data = {
                             no_rekam_medik  : rekamMedik,
                             password        : password
@@ -37,6 +43,9 @@ const MyFormLogin = ({ navigation }) => {
             
             baseURL.post('login',data)
             .then(response => {
+
+                setIsLoading(false)
+
                 dataPasien = response.data.response;
                 token      = response.data;
                 // AsyncStorage.setItem('LOGIN_dataPasien', dataPasien);
@@ -46,7 +55,8 @@ const MyFormLogin = ({ navigation }) => {
             })
             .catch(error => {
                 // Handle errors
-                console.error('Error:', error.message);
+                setIsLoading(false)
+                console.error('Error:', error);
             });
 
         };
@@ -76,7 +86,7 @@ const MyFormLogin = ({ navigation }) => {
 
             <View>
                 {/* Input pertama */}
-                <Text style={{ marginLeft:'7%',color:'#3CA298',fontSize:19 }}>Sign In,SIPS! {'\n'}</Text>
+                <Text style={{ marginLeft:'7%',color:'#3CA298',fontSize:19 }}>Sign In, <Text style={styles.boldText}>SIPS!</Text> {'\n'}</Text>
             </View>
 
             <View style={styles.container}>
@@ -100,9 +110,16 @@ const MyFormLogin = ({ navigation }) => {
 
                 {/* Tombol di bawah input */}
                 <TouchableOpacity onPress={handleLogin} style={styles.button}>
-                    <Text style={styles.buttonText}>Log in</Text>
+                    {isLoading ? (
+                        <ActivityIndicator style={{paddingTop:0}} size="small" color="#ffffff" />
+                    ) : (
+                        <Text style={styles.buttonText}>Log in</Text>
+                    )}
                 </TouchableOpacity>
             </View>
+
+            <SkeletonLoading shape="rectangle" width={1} height={5} />
+            <SkeletonLoading shape="circle" width={50} height={50} />
         
         </View>
         
@@ -145,6 +162,9 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 16,
         textAlign: 'center'
+    },
+    boldText: {
+        fontWeight: 'bold',
     },
 });
 

@@ -12,6 +12,8 @@ import {
     ActivityIndicator
 } from 'react-native';
 
+import SkeletonLoading from '../../loading/skeleton';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/FontAwesome';
@@ -134,6 +136,25 @@ const Radiologi = ({ navigation }) => {
         )
     }
 
+    const loadingCards = () => {
+        const cards = [];
+
+        for (let i = 0; i < 6; i++) {
+            cards.push(
+            <Card key={i} style={{ height: 85, marginBottom: 8, backgroundColor: '#FCFDFC' }}>
+                <Card.Content style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <SkeletonLoading shape="circle" width={50} height={50} />
+                <View style={{ flex: 1, marginLeft: 20 }}>
+                    <SkeletonLoading shape="rectangle" width={290} height={7} />
+                </View>
+                </Card.Content>
+            </Card>
+            );
+        }
+
+        return cards;
+    };
+
     return (
         <>
                 <View style={{
@@ -181,7 +202,8 @@ const Radiologi = ({ navigation }) => {
 
                             {isLoading ? (
                                 <>
-                                    <ActivityIndicator style={{paddingTop:35}} size="large" color="#0000ff" />
+                                    {/* <ActivityIndicator style={{paddingTop:35}} size="large" color="#0000ff" /> */}
+                                    {loadingCards()}
                                 </>
                             ) : (
 
@@ -192,7 +214,7 @@ const Radiologi = ({ navigation }) => {
                                     Array.isArray(dataRadiologi) &&
                                     dataRadiologi.map((item, index) => (
 
-                                        <Card key={index} style={{ height: 85, marginBottom: 7, backgroundColor: '#FCFDFC' }}>
+                                        <Card key={index} style={{ height: 85, marginBottom:8, backgroundColor: '#FCFDFC' }}>
                                             <Card.Content style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                                                 
                                                 <Image
