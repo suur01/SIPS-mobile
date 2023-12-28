@@ -1,21 +1,46 @@
-import React from 'react';
-import { NavigationContainer }              from '@react-navigation/native';
+import React,{useState,useEffect} from 'react';
+import { useNavigation,NavigationContainer }              from '@react-navigation/native';
 import { createDrawerNavigator }            from '@react-navigation/drawer';
 import { createBottomTabNavigator }         from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator }       from '@react-navigation/native-stack';
 import MaterialCommunityIcons               from 'react-native-vector-icons/FontAwesome';
+import { FeatherIcon } from "react-native-feather";
+
+import { useRoute,useIsFocused } from '@react-navigation/native';
 
 import login       from './src/login/Login';
 import Beranda     from './src/konten/Beranda';
 import Help        from './src/konten/Help';
 import Lab         from './src/konten/Lab';
+import MainLab     from './src/konten/Lab';
 import Profile     from './src/konten/Profile';
 
-import radiologi     from './src/hasilLab/radiologi/Radiologi';
+import radiologi           from './src/hasilLab/radiologi/Radiologi';
+import PatologiKlinik      from './src/hasilLab/PatologiKlinik/PatologiKlinik';
+import PatologiAnatomi     from './src/hasilLab/PatologiAnatomi/PatologiAnatomi';
+import Mikrobiologi        from './src/hasilLab/Mikrobiologi/mikrobiologi';
 
 const Stack     = createNativeStackNavigator();
 const Drawer    = createDrawerNavigator();
 const Tab       = createBottomTabNavigator();
+
+
+const Laboratorium = createNativeStackNavigator();
+
+function LaboratoriumStackScreen() {
+    const route = useRoute();
+    const navigation = useNavigation();
+
+    return (
+        <Laboratorium.Navigator >
+            <Laboratorium.Screen name="MainLab" component={Lab} options={{headerShown: false}} />
+            <Laboratorium.Screen name="radiologi" component={radiologi} options={{headerShown: false}} />
+            <Laboratorium.Screen name="PatologiKlinik" component={PatologiKlinik} options={{headerShown: false}} />
+            <Laboratorium.Screen name="PatologiAnatomi" component={PatologiAnatomi} options={{headerShown: false}} />
+            <Laboratorium.Screen name="Mikrobiologi" component={Mikrobiologi} options={{headerShown: false}} />
+        </Laboratorium.Navigator>
+    );
+}
 
 
 /* Digunakan untuk kumpulan menu pindah halaman secara langsung tanpa tab dan drawer */
@@ -27,17 +52,18 @@ function MenuNavigasi() {
                 component={login}
                 options={{ headerShown: false }}
             />
-            <Stack.Screen
+            {/* <Stack.Screen
                 name="radiologi"
-                component={radiologi}
+                component={LaboratoriumStackScreen}
                 options={{ headerShown: false }}
-            />
+            /> */}
         </Stack.Navigator>
     );
 }
 
 /* Digunakan untuk kumpulan menu tab navigasi */
 function MyTabs() {
+
     return (
         <Tab.Navigator
             screenOptions={({ route }) => ({
@@ -60,7 +86,7 @@ function MyTabs() {
                     component={Beranda} 
                     options={{
                         tabBarIcon: ({ color, size,focused }) => (
-                            <MaterialCommunityIcons name="home" color={focused ? '#ffffff' : '#EEF88A'} size={size} />
+                            <MaterialCommunityIcons name="home" color={focused ? '#ffffff' : '#E5F3F0'} size={size} />
                         ),
                         tabBarActiveTintColor:'#ffffff'
                     
@@ -69,10 +95,10 @@ function MyTabs() {
 
                 <Tab.Screen 
                     name="Lab" 
-                    component={Lab} 
+                    component={LaboratoriumStackScreen} 
                     options={{
                         tabBarIcon: ({ color, size,focused }) => (
-                            <MaterialCommunityIcons name="flask" color={focused ? '#ffffff' : '#EEF88A'} size={size} />
+                            <MaterialCommunityIcons name="flask" color={focused ? '#ffffff' : '#E5F3F0'} size={size} />
                         ),
                         tabBarActiveTintColor:'#ffffff',
                         
@@ -83,11 +109,17 @@ function MyTabs() {
                     name="Detail" 
                     component={Profile} 
                     options={{
-                        tabBarIcon: ({ color, size,focused }) => (
-                            <MaterialCommunityIcons name="flask" color={focused ? '#ffffff' : '#EEF88A'} size={size} />
+                        tabBarIcon: ({ color, size, focused }) => (
+                            <MaterialCommunityIcons
+                            name="flask"
+                            color={focused ? '#ffffff' : '#E5F3F0'}
+                            size={size}
+                            style={{ fontWeight: focused ? 'bold' : 'normal' }}
+                            />
                         ),
-                        tabBarActiveTintColor:'#ffffff'
+                        tabBarActiveTintColor: '#ffffff'
                     }}
+                    
                 />
 
                 <Tab.Screen 
@@ -95,7 +127,7 @@ function MyTabs() {
                     component={Profile} 
                     options={{
                         tabBarIcon: ({ color, size,focused }) => (
-                            <MaterialCommunityIcons name="flask" color={focused ? '#ffffff' : '#EEF88A'} size={size} />
+                            <MaterialCommunityIcons name="flask" color={focused ? '#ffffff' : '#E5F3F0'} size={size} />
                         ),
                         tabBarActiveTintColor:'#ffffff'
                     }}
@@ -108,6 +140,7 @@ function MyTabs() {
 
 /* Digunakan untuk kumpulan menu di sidebar(drawer) */
 function MyDrawer() {
+
     return (
         
         <Drawer.Navigator screenOptions={{ headerShown: false,}}>
@@ -117,7 +150,7 @@ function MyDrawer() {
                 options={{
                     drawerItemStyle: { height: 0 }
                 }} 
-            /> 
+            />
             <Drawer.Screen name="Help" component={Help} options={{headerShown: false}} />
             <Drawer.Screen name="Help2" component={Help} options={{headerShown: false}} />
         </Drawer.Navigator>
@@ -146,3 +179,4 @@ function RootNavigator() {
 }
 
 export default RootNavigator;
+

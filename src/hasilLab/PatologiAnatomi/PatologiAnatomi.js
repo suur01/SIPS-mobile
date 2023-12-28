@@ -19,10 +19,10 @@ import { Card } from 'react-native-paper';
 
 import axios from 'axios';
 
-const Radiologi = ({ navigation }) => {
+const PatologiAnatomi = ({ navigation }) => {
 
-    const [dataPasienRad, setDataPasienRad]                     = useState('');
-    const [dataRadiologi, setDataRadiologi]                     = useState('');
+    const [dataPatAnatomi, setDataPatAnatomi]                     = useState('');
+    const [dataPatoAnatomi, setDataPatoAnatomi]                     = useState('');
 
     const [isLoading, setIsLoading] = useState(true);
 
@@ -61,18 +61,18 @@ const Radiologi = ({ navigation }) => {
     const getDataPasien = async () => {
         const jsonString = await AsyncStorage.getItem('LOGIN_dataPasien');
         const DataPasien = JSON.parse(jsonString);
-        setDataPasienRad(DataPasien);
+        setDataPatAnatomi(DataPasien);
 
         console.log('Data berhasil diambil1:', DataPasien.datapasien.agama);
         console.log('Data berhasil diambil2:', DataPasien.token);
 
-        handleRadiologi(DataPasien,DataPasien.token);
+        handlePatologiAnatomi(DataPasien,DataPasien.token);
 
     };
 
     
 
-    const handleRadiologi = async (DataPasien,TOKEN) => {
+    const handlePatologiAnatomi = async (DataPasien,TOKEN) => {
 
         const dataPasienSicret = DataPasien.datapasien.pasien_id_encrypted
         const pid = dataPasienSicret.pid
@@ -82,7 +82,7 @@ const Radiologi = ({ navigation }) => {
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
-            url: `http://apidev.rsudrsoetomo.jatimprov.go.id/sipp/hasilradiologi/?pid=${pid}&piv=${piv}&ps=${ps}`,
+            url: `http://apidev.rsudrsoetomo.jatimprov.go.id/sipp/hasilpatologiAnatomi/?pid=${pid}&piv=${piv}&ps=${ps}`,
             headers: { 
                 'x-authorization-token-sipp': TOKEN,
             }
@@ -93,7 +93,7 @@ const Radiologi = ({ navigation }) => {
             // console.log('data yang di ambil')
             // console.log(JSON.stringify(response.data));
     
-            setDataRadiologi(response.data.response);
+            setDataPatoAnatomi(response.data.response);
             setIsLoading(false)
 
         })
@@ -169,8 +169,8 @@ const Radiologi = ({ navigation }) => {
                                     marginBottom:10
                                 }}>
                                 <MaterialCommunityIcons name="flask" color="white" size={20} />
-                                <Text>    Hasil Radiologi</Text>  
-                                {/* {dataPasienRad && dataPasienRad.token} */}
+                                <Text>    Hasil Patologi Anatomi</Text>  
+                                {/* {dataPatAnatomi && dataPatAnatomi.token} */}
                     </Text>
 
 
@@ -185,12 +185,12 @@ const Radiologi = ({ navigation }) => {
                                 </>
                             ) : (
 
-                                dataRadiologi ? (
+                                dataPatoAnatomi ? (
 
                                     // ketika dataPatoKlinik tidak kosong
 
-                                    Array.isArray(dataRadiologi) &&
-                                    dataRadiologi.map((item, index) => (
+                                    Array.isArray(dataPatoAnatomi) &&
+                                    dataPatoAnatomi.map((item, index) => (
 
                                         <Card key={index} style={{ height: 85, marginBottom: 7, backgroundColor: '#FCFDFC' }}>
                                             <Card.Content style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -218,8 +218,6 @@ const Radiologi = ({ navigation }) => {
                                     // ketika dataPatoKlinik tidak kosong
                                     dataKosong()
                                 )
-                                
-
                             )}
 
                         </>
@@ -232,7 +230,7 @@ const Radiologi = ({ navigation }) => {
     );
 };
 
-export default Radiologi;
+export default PatologiAnatomi;
 
 
 const styles = StyleSheet.create({

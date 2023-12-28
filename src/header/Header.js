@@ -2,8 +2,15 @@ import React from 'react';
 import { View,Image, TouchableOpacity } from 'react-native';
 import { Card, Text } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/FontAwesome';
+import { useNavigation } from '@react-navigation/native';
 
 const HeaderType1 = ({ openDrawer, namaPasien, rekamMedik }) => {
+
+    const navigation = useNavigation();
+
+    const keluar = () =>{
+        navigation.popToTop();
+    }
 
     const commonStyles = {
         textColor: '#149581'
@@ -21,7 +28,9 @@ const HeaderType1 = ({ openDrawer, namaPasien, rekamMedik }) => {
                     <TouchableOpacity onPress={openDrawer}>
                         <MaterialCommunityIcons name="bars" color="white" size={24} />
                     </TouchableOpacity>
-                    <MaterialCommunityIcons name="flask" color="white" size={24} />
+                    <TouchableOpacity onPress={keluar}>
+                        <MaterialCommunityIcons name="flask" color="white" size={24} />
+                    </TouchableOpacity>
                 </View>
 
             </View> 
@@ -52,6 +61,13 @@ const HeaderType1 = ({ openDrawer, namaPasien, rekamMedik }) => {
 };
 
 const HeaderType2 = ({ openDrawer, namaPasien }) => {
+
+    const navigation = useNavigation();
+
+    const keluar = () =>{
+        navigation.popToTop();
+    }
+    
     return (
         <View>
 
@@ -64,7 +80,9 @@ const HeaderType2 = ({ openDrawer, namaPasien }) => {
                     <TouchableOpacity onPress={openDrawer}>
                         <MaterialCommunityIcons name="bars" color="white" size={24} />
                     </TouchableOpacity>
-                    <MaterialCommunityIcons name="flask" color="white" size={24} />
+                    <TouchableOpacity onPress={keluar}>
+                        <MaterialCommunityIcons name="flask" color="white" size={24} />
+                    </TouchableOpacity>
                 </View>
 
             </View> 

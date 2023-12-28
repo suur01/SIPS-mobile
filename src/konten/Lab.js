@@ -23,22 +23,11 @@ import pkImage from '../assets/image/pk.png';
 import mikrobiologiImage from '../assets/image/mikrobiologi.png';
 import patologiImage from '../assets/image/pa.png';
 
-// const dataArray = [
-//   { id: 1, content: 'Hasil Radiologi',        link:'radiologi', imge:radiologi },
-//   { id: 2, content: 'Hasil Patologi Klinik',  link:'radiologi', imge:pk },
-//   { id: 3, content: 'Hasil Mikrobiologi',     link:'radiologi', imge:mikrobiologi },
-//   // { id: 4, content: 'Hasil Patologi Anatomi', link:'radiologi', imge:'../assets/image/pa.png' },
-//   // { id: 5, content: 'Card 3 Content',         link:'radiologi', imge:'../assets/image/radiologi.png' },
-//   // { id: 6, content: 'Card 3 Content',         link:'radiologi', imge:'../assets/image/sips.png' },
-// ];
-
 const dataArray = [
-  { id: 1, content: 'Hasil Radiologi',        link: 'radiologi', imge: radiologiImage },
-  { id: 2, content: 'Hasil Patologi Klinik',  link: 'radiologi', imge: pkImage },
-  { id: 3, content: 'Hasil Mikrobiologi',     link: 'radiologi', imge: mikrobiologiImage },
-  { id: 4, content: 'Hasil Patologi Anatomi', link: 'radiologi', imge: patologiImage },
-  { id: 5, content: 'Hasil Patologi Anatomi', link: 'radiologi', imge: patologiImage },
-  { id: 6, content: 'Hasil Patologi Anatomi', link: 'radiologi', imge: patologiImage },
+  { id: 1, content: 'Hasil Radiologi',        link: 'radiologi',       imge: radiologiImage },
+  { id: 2, content: 'Hasil Patologi Klinik',  link: 'PatologiKlinik',  imge: pkImage },
+  { id: 4, content: 'Hasil Patologi Anatomi', link: 'PatologiAnatomi', imge: patologiImage },
+  { id: 3, content: 'Hasil Mikrobiologi',     link: 'Mikrobiologi',    imge: mikrobiologiImage },
 ];
 
 
@@ -52,8 +41,16 @@ const Lab = ({ navigation }) => {
   const [dataPasien, setDataPasien] = useState('');
 
   const PindahHalaman = (navigation,content) => {
-    console.log('Opening image for:', content);
+
     navigation.navigate(content);
+
+    // navigation.navigate('MyDrawer', {
+    //   screen: 'MyTabs',
+    //   params: {
+    //       screen: 'Lab',
+    //   },
+    //   });
+      
     // Add your logic to display the image here
   };
 
@@ -117,10 +114,12 @@ const Lab = ({ navigation }) => {
                     {row.map(item => (
                       <Card key={item.id} style={{ flex: 1, marginRight: 10, backgroundColor: '#FCFDFC' }}>
                         <TouchableOpacity key={item.id} onPress={() => PindahHalaman(navigation, item.link)}>
+                          <>
                           <Card.Content style={{ alignItems: 'center', marginTop: 38 }}>
                             <Image source={item.imge} style={{ width: 60, height: 60, paddingTop: 20 }} />
                             <Text style={styles.Text}>{item.content}</Text>
                           </Card.Content>
+                          </>
                         </TouchableOpacity>
                       </Card>
                     ))}

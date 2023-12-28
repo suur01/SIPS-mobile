@@ -19,6 +19,10 @@ import Header from '../header/Header';
 
 const HomeScreen = ({ navigation }) => {
 
+    const commonStyles = {
+        textColor: '#149581'
+    };
+
     useEffect(() => {
         // Panggil fungsi untuk mengambil data saat komponen dimount
         getData();
@@ -71,57 +75,57 @@ return (
                         {/* Header Card */}
                         
                         <Paragraph style={{ marginBottom: 10 }}>
-                            <Text variant="bodyMedium" style={{ fontSize: 17, color: 'black' }}>NAMA PASIEN</Text>{'\n'}
-                            <Text variant="bodyMedium" style={{ fontSize: 13, color: 'black' }}>
+                            <Text variant="bodyMedium" style={{ fontSize: 17, color: commonStyles.textColor }}>NAMA PASIEN</Text>{'\n'}
+                            <Text variant="bodyMedium" style={{ fontSize: 13, color: commonStyles.textColor }}>
                                 {dataPasien && dataPasien.datapasien && dataPasien.datapasien.nama_pasien}
                             </Text>
                         </Paragraph>
 
                         <Paragraph style={{ marginBottom: 10 }}>
-                            <Text variant="bodyMedium" style={{ fontSize: 17, color: 'black' }}>NO REKAM MEDIK</Text>{'\n'}
-                            <Text variant="bodyMedium" style={{ fontSize: 13, color: 'black' }}>
+                            <Text variant="bodyMedium" style={{ fontSize: 17, color: commonStyles.textColor }}>NO REKAM MEDIK</Text>{'\n'}
+                            <Text variant="bodyMedium" style={{ fontSize: 13, color: commonStyles.textColor }}>
                                 {dataPasien && dataPasien.datapasien && dataPasien.datapasien.no_rekam_medik}
                             </Text>
                         </Paragraph>
 
                         <Paragraph style={{ marginBottom: 10 }}>
-                            <Text variant="bodyMedium" style={{ fontSize: 16, color: 'black' }}>KTP / ID Card</Text>{'\n'}
-                            <Text variant="bodyMedium" style={{ fontSize: 13, color: 'black' }}>
+                            <Text variant="bodyMedium" style={{ fontSize: 16, color: commonStyles.textColor }}>KTP / ID Card</Text>{'\n'}
+                            <Text variant="bodyMedium" style={{ fontSize: 13, color: commonStyles.textColor }}>
                                 {dataPasien && dataPasien.datapasien && dataPasien.datapasien.no_ktp}
                             </Text>
                         </Paragraph>
 
                         <Paragraph style={{ marginBottom: 10 }}>
-                            <Text variant="bodyMedium" style={{ fontSize: 16, color: 'black' }}>AGAMA</Text>{'\n'}
-                            <Text variant="bodyMedium" style={{ fontSize: 13, color: 'black' }}>
+                            <Text variant="bodyMedium" style={{ fontSize: 16, color: commonStyles.textColor }}>AGAMA</Text>{'\n'}
+                            <Text variant="bodyMedium" style={{ fontSize: 13, color: commonStyles.textColor }}>
                                 {dataPasien && dataPasien.datapasien && dataPasien.datapasien.agama}
                             </Text>
                         </Paragraph>
 
                         <Paragraph style={{ marginBottom: 10 }}>
-                            <Text variant="bodyMedium" style={{ fontSize: 16, color: 'black' }}>STATUS KAWIN</Text>{'\n'}
-                            <Text variant="bodyMedium" style={{ fontSize: 13, color: 'black' }}>
+                            <Text variant="bodyMedium" style={{ fontSize: 16, color: commonStyles.textColor }}>STATUS KAWIN</Text>{'\n'}
+                            <Text variant="bodyMedium" style={{ fontSize: 13, color: commonStyles.textColor }}>
                                 {dataPasien && dataPasien.datapasien && dataPasien.datapasien.statusperkawinan}
                             </Text>
                         </Paragraph>
 
                         <Paragraph style={{ marginBottom: 10 }}>
-                            <Text variant="bodyMedium" style={{ fontSize: 16, color: 'black' }}>PROVINSI</Text>{'\n'}
-                            <Text variant="bodyMedium" style={{ fontSize: 13, color: 'black' }}>
+                            <Text variant="bodyMedium" style={{ fontSize: 16, color: commonStyles.textColor }}>PROVINSI</Text>{'\n'}
+                            <Text variant="bodyMedium" style={{ fontSize: 13, color: commonStyles.textColor }}>
                                 {dataPasien && dataPasien.datapasien && dataPasien.datapasien.propinsi_nama}
                             </Text>
                         </Paragraph>
 
                         <Paragraph style={{ marginBottom: 10 }}>
-                            <Text variant="bodyMedium" style={{ fontSize: 16, color: 'black' }}>KAB / KOTA</Text>{'\n'}
-                            <Text variant="bodyMedium" style={{ fontSize: 13, color: 'black' }}>
+                            <Text variant="bodyMedium" style={{ fontSize: 16, color: commonStyles.textColor }}>KAB / KOTA</Text>{'\n'}
+                            <Text variant="bodyMedium" style={{ fontSize: 13, color: commonStyles.textColor }}>
                                 {dataPasien && dataPasien.datapasien && dataPasien.datapasien.kabupaten_nama}
                             </Text>
                         </Paragraph>
 
                         <Paragraph style={{ marginBottom: 10 }}>
-                            <Text variant="bodyMedium" style={{ fontSize: 16, color: 'black' }}>KECAMATAN</Text>{'\n'}
-                            <Text variant="bodyMedium" style={{ fontSize: 13, color: 'black' }}>
+                            <Text variant="bodyMedium" style={{ fontSize: 16, color: commonStyles.textColor }}>KECAMATAN</Text>{'\n'}
+                            <Text variant="bodyMedium" style={{ fontSize: 13, color: commonStyles.textColor }}>
                                 {dataPasien && dataPasien.datapasien && dataPasien.datapasien.kecamatan_nama}
                             </Text>
                         </Paragraph>

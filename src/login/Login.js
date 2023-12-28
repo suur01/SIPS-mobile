@@ -9,15 +9,13 @@ import { View,
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-
-
 import baseURL from '../../baseURL';
 
 const MyFormLogin = ({ navigation }) => {
         // State untuk menyimpan nilai input
         
 
-        const [rekamMedik, setrekamMedik]   = useState('12930190');
+        const [rekamMedik, setrekamMedik]   = useState('13025279');
         const [password, setpassword]       = useState('A1dfasdfsdf');
 
         let dataPasien = ''
@@ -35,6 +33,7 @@ const MyFormLogin = ({ navigation }) => {
                 Authorization: 'Bearer YOUR_ACCESS_TOKEN',
                 // Other headers...
             };
+
             
             baseURL.post('login',data)
             .then(response => {
@@ -55,13 +54,10 @@ const MyFormLogin = ({ navigation }) => {
 
         // Menyimpan string di AsyncStorage
             const storeData = async () => {
-                    const token              = JSON.stringify(token);
                     const jsonDataPasien     = JSON.stringify(dataPasien);
-                    const jsonEnkripPasienid = JSON.stringify(dataPasien.datapasien.pasien_id_encrypted)
-                    console.log('pasien id',token)
+                    console.log('pasien id',dataPasien)
                 try {
                     await AsyncStorage.setItem('LOGIN_dataPasien', jsonDataPasien);
-                    await AsyncStorage.setItem('LOGIN_dataPasienIdEncrypted', jsonEnkripPasienid);
                 } catch (e) {
                     console.error('Error saat menyimpan data:', e);
                 }
@@ -80,7 +76,7 @@ const MyFormLogin = ({ navigation }) => {
 
             <View>
                 {/* Input pertama */}
-                <Text style={{ marginLeft:'7%',color:'#0E9971',fontSize:15 }}>Sign In,SIPS! {'\n'}</Text>
+                <Text style={{ marginLeft:'7%',color:'#3CA298',fontSize:19 }}>Sign In,SIPS! {'\n'}</Text>
             </View>
 
             <View style={styles.container}>
@@ -139,7 +135,7 @@ const styles = StyleSheet.create({
         borderRadius: 5
     },
     button: {
-        backgroundColor: '#0E9971',
+        backgroundColor: '#44A59B',
         padding: 10,
         borderRadius: 5,
         width:'90%',
