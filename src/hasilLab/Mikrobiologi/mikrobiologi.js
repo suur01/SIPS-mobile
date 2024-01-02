@@ -158,7 +158,7 @@ const Mikrobiologi = ({ navigation }) => {
     return (
         <>
                 <View style={{
-                        height: 90,
+                        height: 70,
                         backgroundColor: '#149581',
                     }}>
 

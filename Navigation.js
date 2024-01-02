@@ -15,10 +15,12 @@ import Lab         from './src/konten/Lab';
 import MainLab     from './src/konten/Lab';
 import Profile     from './src/konten/Profile';
 
-import radiologi           from './src/hasilLab/radiologi/Radiologi';
-import PatologiKlinik      from './src/hasilLab/PatologiKlinik/PatologiKlinik';
-import PatologiAnatomi     from './src/hasilLab/PatologiAnatomi/PatologiAnatomi';
-import Mikrobiologi        from './src/hasilLab/Mikrobiologi/mikrobiologi';
+import radiologi                from './src/hasilLab/radiologi/Radiologi';
+import PatologiKlinik           from './src/hasilLab/PatologiKlinik/PatologiKlinik';
+import PatologiAnatomi          from './src/hasilLab/PatologiAnatomi/PatologiAnatomi';
+import Mikrobiologi             from './src/hasilLab/Mikrobiologi/mikrobiologi';
+
+import DetailRadiologi          from './src/hasilLab/radiologi/DetailRadiologi';
 
 const Stack     = createNativeStackNavigator();
 const Drawer    = createDrawerNavigator();
@@ -38,6 +40,9 @@ function LaboratoriumStackScreen() {
             <Laboratorium.Screen name="PatologiKlinik" component={PatologiKlinik} options={{headerShown: false}} />
             <Laboratorium.Screen name="PatologiAnatomi" component={PatologiAnatomi} options={{headerShown: false}} />
             <Laboratorium.Screen name="Mikrobiologi" component={Mikrobiologi} options={{headerShown: false}} />
+            
+            <Laboratorium.Screen name="DetailRadiologi" component={DetailRadiologi} options={{headerShown: false}} />
+
         </Laboratorium.Navigator>
     );
 }

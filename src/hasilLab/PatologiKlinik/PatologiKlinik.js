@@ -17,8 +17,8 @@ import SkeletonLoading from '../../loading/skeleton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/FontAwesome';
-import { Card } from 'react-native-paper';
 
+import { TouchableRipple,Button,Card } from 'react-native-paper';
 import axios from 'axios';
 
 const PatologiKlinik = ({ navigation }) => {
@@ -158,7 +158,7 @@ const PatologiKlinik = ({ navigation }) => {
     return (
         <>
                 <View style={{
-                        height: 90,
+                        height: 70,
                         backgroundColor: '#149581',
                     }}>
 
@@ -215,25 +215,31 @@ const PatologiKlinik = ({ navigation }) => {
                                     Array.isArray(dataPatoKlinik) &&
                                     dataPatoKlinik.map((item, index) => (
                                         
-                                        <Card key={index} style={{ height: 85, marginBottom: 8, backgroundColor: '#FCFDFC' }}>
-                                            <Card.Content style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                                        <TouchableRipple
+                                            key={index}
+                                            onPress={() => console.log('TouchableRipple clicked')}
+                                            rippleColor="#CCF7EE" // Warna ripple
+                                        >
+                                            <Card key={index} style={{ height: 85, marginBottom: 8, backgroundColor: '#FCFDFC' }}>
+                                                <Card.Content style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                                                    
+                                                    <Image
+                                                        source={require('../../assets/image/radiologi.png')} // Ganti dengan path yang sesuai
+                                                        style={{ width: 40, height: 40, marginRight: 10 }} // Sesuaikan dengan ukuran gambar Anda
+                                                    />
+                                                    
+                                                    <View style={{ flex: 1 }}>
+                                                        {/* <Text style={{ fontSize: 16, color: commonStyles.textColor }}>
+                                                            Text 1: {item.pasienmasukpenunjang_id_encrypted.pnjid}
+                                                        </Text> */}
+                                                        <Text style={{ fontSize: 18, color: commonStyles.textColor }}>
+                                                            {item.tglmasukpenunjang}
+                                                        </Text>
+                                                    </View>
                                                 
-                                                <Image
-                                                    source={require('../../assets/image/radiologi.png')} // Ganti dengan path yang sesuai
-                                                    style={{ width: 40, height: 40, marginRight: 10 }} // Sesuaikan dengan ukuran gambar Anda
-                                                />
-                                                
-                                                <View style={{ flex: 1 }}>
-                                                    {/* <Text style={{ fontSize: 16, color: commonStyles.textColor }}>
-                                                        Text 1: {item.pasienmasukpenunjang_id_encrypted.pnjid}
-                                                    </Text> */}
-                                                    <Text style={{ fontSize: 18, color: commonStyles.textColor }}>
-                                                        {item.tglmasukpenunjang}
-                                                    </Text>
-                                                </View>
-                                            
-                                            </Card.Content>
-                                        </Card>
+                                                </Card.Content>
+                                            </Card>
+                                        </TouchableRipple>
                                         
                                     ))
 

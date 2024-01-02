@@ -12,8 +12,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import baseURL from '../../baseURL';
 
-import SkeletonLoading from '../loading/skeleton';
-
 
 const MyFormLogin = ({ navigation }) => {
         // State untuk menyimpan nilai input
@@ -117,9 +115,6 @@ const MyFormLogin = ({ navigation }) => {
                     )}
                 </TouchableOpacity>
             </View>
-
-            <SkeletonLoading shape="rectangle" width={1} height={5} />
-            <SkeletonLoading shape="circle" width={50} height={50} />
         
         </View>
         

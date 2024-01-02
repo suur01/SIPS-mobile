@@ -9,17 +9,17 @@ import {
     TouchableOpacity,
     StyleSheet,
     BackHandler,
-    ActivityIndicator
+    ActivityIndicator,
+    TouchableNativeFeedback,
+    Platform
 } from 'react-native';
+import { TouchableRipple,Button,Card } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import MaterialCommunityIcons from 'react-native-vector-icons/FontAwesome';
+import axios from 'axios';
+import { useNavigation,NavigationContainer }              from '@react-navigation/native';
 
 import SkeletonLoading from '../../loading/skeleton';
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-import MaterialCommunityIcons from 'react-native-vector-icons/FontAwesome';
-import { Card } from 'react-native-paper';
-
-import axios from 'axios';
 
 const Radiologi = ({ navigation }) => {
 
@@ -65,8 +65,8 @@ const Radiologi = ({ navigation }) => {
         const DataPasien = JSON.parse(jsonString);
         setDataPasienRad(DataPasien);
 
-        console.log('Data berhasil diambil1:', DataPasien.datapasien.agama);
-        console.log('Data berhasil diambil2:', DataPasien.token);
+        // console.log('Data berhasil diambil1:', DataPasien.datapasien.agama);
+        // console.log('Data berhasil diambil2:', DataPasien.token);
 
         handleRadiologi(DataPasien,DataPasien.token);
 
@@ -92,8 +92,6 @@ const Radiologi = ({ navigation }) => {
     
         axios.request(config)
         .then((response) => {
-            // console.log('data yang di ambil')
-            // console.log(JSON.stringify(response.data));
     
             setDataRadiologi(response.data.response);
             setIsLoading(false)
@@ -141,24 +139,28 @@ const Radiologi = ({ navigation }) => {
 
         for (let i = 0; i < 6; i++) {
             cards.push(
-            <Card key={i} style={{ height: 85, marginBottom: 8, backgroundColor: '#FCFDFC' }}>
-                <Card.Content style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                <SkeletonLoading shape="circle" width={50} height={50} />
-                <View style={{ flex: 1, marginLeft: 20 }}>
-                    <SkeletonLoading shape="rectangle" width={290} height={7} />
-                </View>
-                </Card.Content>
-            </Card>
+                <Card key={i} style={{ height: 85, marginBottom: 8, backgroundColor: 'rgba(252, 253, 252, 1)' }}>
+                    <Card.Content style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <SkeletonLoading shape="circle" width={50} height={50} />
+                    <View style={{ flex: 1, marginLeft: 20 }}>
+                        <SkeletonLoading shape="rectangle" width={290} height={7} />
+                    </View>
+                    </Card.Content>
+                </Card>
             );
         }
 
         return cards;
     };
 
+    const handleDetailPage = (penunjangid) => {
+        navigation.navigate('DetailRadiologi',penunjangid);
+    };
+
     return (
         <>
                 <View style={{
-                        height: 90,
+                        height: 70,
                         backgroundColor: '#149581',
                     }}>
 
@@ -213,26 +215,31 @@ const Radiologi = ({ navigation }) => {
 
                                     Array.isArray(dataRadiologi) &&
                                     dataRadiologi.map((item, index) => (
+                                        
+                                        <TouchableRipple
+                                            key={index}
+                                            onPress={() => handleDetailPage(item)}
+                                            rippleColor="#CCF7EE" // Warna ripple
+                                        >
+                                            <Card key={index} style={{ height: 85, marginBottom:8, backgroundColor: '#FCFDFC' }}>
+                                                    <Card.Content style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                                                        
+                                                        <Image
+                                                            source={require('../../assets/image/detradiologi.png')} // Ganti dengan path yang sesuai
+                                                            style={{ width: 40, height: 40, marginRight: 10 }} // Sesuaikan dengan ukuran gambar Anda
+                                                        />
+                                                        
+                                                        <View style={{ flex: 1 }}>
+                                                            <Text style={{ fontSize: 18, color: commonStyles.textColor }}>
+                                                                {item.tglmasukpenunjang}
+                                                            </Text>
+                                                        </View>
 
-                                        <Card key={index} style={{ height: 85, marginBottom:8, backgroundColor: '#FCFDFC' }}>
-                                            <Card.Content style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                                                
-                                                <Image
-                                                    source={require('../../assets/image/radiologi.png')} // Ganti dengan path yang sesuai
-                                                    style={{ width: 40, height: 40, marginRight: 10 }} // Sesuaikan dengan ukuran gambar Anda
-                                                />
-                                                
-                                                <View style={{ flex: 1 }}>
-                                                    {/* <Text style={{ fontSize: 16, color: commonStyles.textColor }}>
-                                                        Text 1: {item.pasienmasukpenunjang_id_encrypted.pnjid}
-                                                    </Text> */}
-                                                    <Text style={{ fontSize: 18, color: commonStyles.textColor }}>
-                                                        {item.tglmasukpenunjang}
-                                                    </Text>
-                                                </View>
-                                            
-                                            </Card.Content>
-                                        </Card>
+                                                        
+                                                    
+                                                    </Card.Content>
+                                            </Card>
+                                        </TouchableRipple>
                                         
                                     ))
                                 
