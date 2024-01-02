@@ -11,13 +11,17 @@ import {
     BackHandler,
     ActivityIndicator,
     TouchableNativeFeedback,
-    Platform
+    Platform,
+    Pressable
 } from 'react-native';
 import { TouchableRipple,Button,Card } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MaterialCommunityIcons from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios';
 import { useNavigation,NavigationContainer }              from '@react-navigation/native';
+import { ChevronLeft,LogOut,Settings } from 'lucide-react-native';
+
+import baseURL from '../../../baseURL';
 
 import SkeletonLoading from '../../loading/skeleton';
 
@@ -52,6 +56,17 @@ const Radiologi = ({ navigation }) => {
 
     }, [navigation]);
 
+    const kembali = () =>{
+        console.log('kembali')
+        // navigation.navigate('Lab');
+        // navigation.navigate('MyDrawer', {
+        // screen: 'MyTabs',
+        // params: {
+        //     screen: 'Lab',
+        // },
+        // });
+        navigation.pop();
+    }
 
     const keluar = () =>{
         navigation.navigate('MenuNavigasi', {
@@ -81,16 +96,11 @@ const Radiologi = ({ navigation }) => {
         const piv = dataPasienSicret.piv
         const ps  = dataPasienSicret.ps
     
-        let config = {
-            method: 'get',
-            maxBodyLength: Infinity,
-            url: `http://apidev.rsudrsoetomo.jatimprov.go.id/sipp/hasilradiologi/?pid=${pid}&piv=${piv}&ps=${ps}`,
+        baseURL.get(`hasilradiologi/?pid=${pid}&piv=${piv}&ps=${ps}`,{
             headers: { 
                 'x-authorization-token-sipp': TOKEN,
             }
-        };
-    
-        axios.request(config)
+        })
         .then((response) => {
     
             setDataRadiologi(response.data.response);
@@ -160,16 +170,15 @@ const Radiologi = ({ navigation }) => {
     return (
         <>
                 <View style={{
-                        height: 70,
+                        height: 90,
                         backgroundColor: '#149581',
                     }}>
 
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', paddingLeft:20, paddingRight: 20, paddingTop: 35 }}>
+                        
+                        <ChevronLeft onPress={kembali} color="white" size={24} />
                         <Text></Text>
-                        <Text></Text>
-                        {/* <MaterialCommunityIcons name="flask" color="white" size={24} /> */}
-                        {/* <MaterialCommunityIcons name="flask" color="white" size={24} /> */}
-                        <MaterialCommunityIcons onPress={keluar} name="flask" color="white" size={24} />
+                        <LogOut onPress={keluar} color="white" size={24} />
                     </View>
 
                 </View>
@@ -189,7 +198,7 @@ const Radiologi = ({ navigation }) => {
                                     fontSize:17,
                                     marginLeft:'5%',
                                     fontWeight: 'bold',
-                                    marginBottom:10
+                                    marginBottom:10,
                                 }}>
                                 <MaterialCommunityIcons name="flask" color="white" size={20} />
                                 <Text>    Hasil Radiologi</Text>  
@@ -222,22 +231,20 @@ const Radiologi = ({ navigation }) => {
                                             rippleColor="#CCF7EE" // Warna ripple
                                         >
                                             <Card key={index} style={{ height: 85, marginBottom:8, backgroundColor: '#FCFDFC' }}>
-                                                    <Card.Content style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                                                        
-                                                        <Image
-                                                            source={require('../../assets/image/detradiologi.png')} // Ganti dengan path yang sesuai
-                                                            style={{ width: 40, height: 40, marginRight: 10 }} // Sesuaikan dengan ukuran gambar Anda
-                                                        />
-                                                        
-                                                        <View style={{ flex: 1 }}>
-                                                            <Text style={{ fontSize: 18, color: commonStyles.textColor }}>
-                                                                {item.tglmasukpenunjang}
-                                                            </Text>
-                                                        </View>
-
-                                                        
+                                                <Card.Content style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                                                     
-                                                    </Card.Content>
+                                                    <Image
+                                                        source={require('../../assets/image/detradiologi.png')} // Ganti dengan path yang sesuai
+                                                        style={{ width: 40, height: 40, marginRight: 10 }} // Sesuaikan dengan ukuran gambar Anda
+                                                    />
+                                                    
+                                                    <View style={{ flex: 1 }}>
+                                                        <Text style={{ fontSize: 18, color: commonStyles.textColor }}>
+                                                            {item.tglmasukpenunjang}
+                                                        </Text>
+                                                    </View>
+                                                
+                                                </Card.Content>
                                             </Card>
                                         </TouchableRipple>
                                         

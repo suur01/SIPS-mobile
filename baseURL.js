@@ -4,12 +4,9 @@ import axios from 'axios';
 
 const instance = axios.create({
     baseURL: 'http://api.rsudrsoetomo.jatimprov.go.id/sipp/', // Set your base URL here
-    timeout: 5000, // Set a timeout for requests
     headers: {
         'Content-Type': 'application/json',
-        // Add common headers here
-        // Authorization: 'Bearer YOUR_ACCESS_TOKEN',
-        // Other common headers...
+        'x-authorization-token-sipp': 'YOUR_TOKEN_HERE', // Replace with your actual token
     },
 });
 

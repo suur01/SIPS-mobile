@@ -13,10 +13,9 @@ import {
 } from 'react-native';
 
 import SkeletonLoading from '../../loading/skeleton';
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import MaterialCommunityIcons from 'react-native-vector-icons/FontAwesome';
+import { ChevronLeft,LogOut,Settings } from 'lucide-react-native';
 
 import { TouchableRipple,Button,Card } from 'react-native-paper';
 import axios from 'axios';
@@ -105,9 +104,7 @@ const PatologiKlinik = ({ navigation }) => {
         });
     
     };
-
-
-
+    
     /* Function Kembali */
 
     const goToTABnavigation = () => {
@@ -163,7 +160,7 @@ const PatologiKlinik = ({ navigation }) => {
                     }}>
 
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', paddingLeft:20, paddingRight: 20, paddingTop: 35 }}>
-                        <Text></Text>
+                        <ChevronLeft onPress={goToTABnavigation} color="white" size={24} />
                         <Text></Text>
                         {/* <MaterialCommunityIcons name="flask" color="white" size={24} /> */}
                         {/* <MaterialCommunityIcons name="flask" color="white" size={24} /> */}
@@ -187,7 +184,8 @@ const PatologiKlinik = ({ navigation }) => {
                                     fontSize:17,
                                     marginLeft:'5%',
                                     fontWeight: 'bold',
-                                    marginBottom:10
+                                    marginBottom:10,
+                                    paddingTop:20,
                                 }}>
                                 <MaterialCommunityIcons name="flask" color="white" size={20} />
                                 <Text>    Hasil Patologi Klinik</Text>  
@@ -224,7 +222,7 @@ const PatologiKlinik = ({ navigation }) => {
                                                 <Card.Content style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                                                     
                                                     <Image
-                                                        source={require('../../assets/image/radiologi.png')} // Ganti dengan path yang sesuai
+                                                        source={require('../../assets/image/woPk.png')} // Ganti dengan path yang sesuai
                                                         style={{ width: 40, height: 40, marginRight: 10 }} // Sesuaikan dengan ukuran gambar Anda
                                                     />
                                                     

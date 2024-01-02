@@ -13,11 +13,10 @@ import {
 } from 'react-native';
 
 import SkeletonLoading from '../../loading/skeleton';
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import MaterialCommunityIcons from 'react-native-vector-icons/FontAwesome';
 import { Card } from 'react-native-paper';
+import { ChevronLeft,LogOut,Settings } from 'lucide-react-native';
 
 import axios from 'axios';
 
@@ -106,8 +105,6 @@ const PatologiAnatomi = ({ navigation }) => {
     
     };
 
-
-
     /* Function Kembali */
 
     const goToTABnavigation = () => {
@@ -163,7 +160,7 @@ const PatologiAnatomi = ({ navigation }) => {
                     }}>
 
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', paddingLeft:20, paddingRight: 20, paddingTop: 35 }}>
-                        <Text></Text>
+                        <ChevronLeft onPress={goToTABnavigation} color="white" size={24} />
                         <Text></Text>
                         {/* <MaterialCommunityIcons name="flask" color="white" size={24} /> */}
                         {/* <MaterialCommunityIcons name="flask" color="white" size={24} /> */}
@@ -187,7 +184,8 @@ const PatologiAnatomi = ({ navigation }) => {
                                     fontSize:17,
                                     marginLeft:'5%',
                                     fontWeight: 'bold',
-                                    marginBottom:10
+                                    marginBottom:10,
+                                    paddingTop:20,
                                 }}>
                                 <MaterialCommunityIcons name="flask" color="white" size={20} />
                                 <Text>    Hasil Patologi Anatomi</Text>  

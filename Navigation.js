@@ -4,7 +4,8 @@ import { createDrawerNavigator }            from '@react-navigation/drawer';
 import { createBottomTabNavigator }         from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator }       from '@react-navigation/native-stack';
 import MaterialCommunityIcons               from 'react-native-vector-icons/FontAwesome';
-import { FeatherIcon } from "react-native-feather";
+import * as Icon from "react-native-feather";
+import { ChevronLeft,LogOut,Settings } from 'lucide-react-native';
 
 import { useRoute,useIsFocused } from '@react-navigation/native';
 
@@ -71,6 +72,7 @@ function MyTabs() {
 
     return (
         <Tab.Navigator
+            barStyle={{ backgroundColor: 'tomato'}}
             screenOptions={({ route }) => ({
                 headerShown: false,
                 tabBarStyle: {
@@ -115,12 +117,7 @@ function MyTabs() {
                     component={Profile} 
                     options={{
                         tabBarIcon: ({ color, size, focused }) => (
-                            <MaterialCommunityIcons
-                            name="flask"
-                            color={focused ? '#ffffff' : '#E5F3F0'}
-                            size={size}
-                            style={{ fontWeight: focused ? 'bold' : 'normal' }}
-                            />
+                            <Icon.Clipboard color={focused ? '#ffffff' : '#E5F3F0'} width={25} height={25} />
                         ),
                         tabBarActiveTintColor: '#ffffff'
                     }}
@@ -132,7 +129,9 @@ function MyTabs() {
                     component={Profile} 
                     options={{
                         tabBarIcon: ({ color, size,focused }) => (
-                            <MaterialCommunityIcons name="flask" color={focused ? '#ffffff' : '#E5F3F0'} size={size} />
+                            // <MaterialCommunityIcons name="flask" color={focused ? '#ffffff' : '#E5F3F0'} size={size} />
+                            // <Icon.Settings fill="white" color={focused ? '#ffffff' : '#E5F3F0'} width={25} height={25} />
+                            <Settings color={focused ? '#ffffff' : '#E5F3F0'} width={25} height={25}/>
                         ),
                         tabBarActiveTintColor:'#ffffff'
                     }}

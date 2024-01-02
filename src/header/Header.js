@@ -3,6 +3,7 @@ import { View,Image, TouchableOpacity } from 'react-native';
 import { Card, Text } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
+import { ChevronLeft,LogOut,Settings } from 'lucide-react-native';
 
 const HeaderType1 = ({ openDrawer, namaPasien, rekamMedik }) => {
 
@@ -29,7 +30,8 @@ const HeaderType1 = ({ openDrawer, namaPasien, rekamMedik }) => {
                         <MaterialCommunityIcons name="bars" color="white" size={24} />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={keluar}>
-                        <MaterialCommunityIcons name="flask" color="white" size={24} />
+                        {/* <MaterialCommunityIcons name="flask" color="white" size={24} /> */}
+                        <LogOut color="white" size={24} />
                     </TouchableOpacity>
                 </View>
 
@@ -81,7 +83,8 @@ const HeaderType2 = ({ openDrawer, namaPasien }) => {
                         <MaterialCommunityIcons name="bars" color="white" size={24} />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={keluar}>
-                        <MaterialCommunityIcons name="flask" color="white" size={24} />
+                        {/* <MaterialCommunityIcons name="flask" color="white" size={24} /> */}
+                        <LogOut color="white" size={24} />
                     </TouchableOpacity>
                 </View>
 
