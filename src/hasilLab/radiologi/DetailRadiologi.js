@@ -27,12 +27,18 @@ import Modal from "react-native-modal";
 import { ChevronLeft,LogOut } from 'lucide-react-native';
 import baseURL from '../../../baseURL';
 
+import RNFS from 'react-native-fs';
+import Share from 'react-native-share';
+
+import { PermissionsAndroid } from 'react-native';
+
 
 const DetailRadiologi = ({ route,navigation }) => {
 
     const [DataPasien, setDataPasien]                                     = useState();
-    const [pasienmasukpenunjang_id, setpasienmasukpenunjang_id]           = useState();
+    const [TOKN, setTOKEN]                                                = useState();
     const [dataDetailRadiologi, setDataDetailRadiologi]                   = useState([]);
+    const [encDataDetailRadiologi, setEncDataDetailRadiologi]                   = useState([]);
     const [isLoading, setIsLoading]                                       = useState(true);
 
     useEffect( () => {
@@ -48,6 +54,30 @@ const DetailRadiologi = ({ route,navigation }) => {
                 console.error('Error fetching data:', error);
             }
         };
+
+        const requestStoragePermission = async () => {
+            try {
+                const granted = await PermissionsAndroid.request(
+                    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+                    {
+                        title: 'Storage Permission',
+                        message: 'We need access to your storage for this feature.',
+                        buttonNeutral: 'Ask Me Later',
+                        buttonNegative: 'Cancel',
+                        buttonPositive: 'OK',
+                    },
+                );
+                if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                    console.log('Storage permission granted');
+                } else {
+                    console.log('Storage permission denied');
+                }
+            } catch (err) {
+                console.warn(err);
+            }
+        };
+
+        requestStoragePermission();
     
         fetchData();
         
@@ -72,6 +102,7 @@ const DetailRadiologi = ({ route,navigation }) => {
         const piv   = dataPasienSicret.piv
         const ps    = dataPasienSicret.ps
         const TOKEN = dataPasien.token
+        setTOKEN(TOKEN)
 
         const dataPasienPenunjangID = pasienmasukpenunjang_id_encrypted
         const pnjid = dataPasienPenunjangID.pnjid
@@ -85,9 +116,10 @@ const DetailRadiologi = ({ route,navigation }) => {
         })
         .then((response) => {
             
-            // console.log('hasil detail radiologi')
-            // console.log(response.data.response)
+            console.log('hasil detail radiologi')
+            console.log(response.data.response[0].pasienmasukpenunjang_id_encrypted)
             setDataDetailRadiologi(response.data.response);
+            setEncDataDetailRadiologi(response.data.response[0].pasienmasukpenunjang_id_encrypted)
             setIsLoading(false)
 
         })
@@ -132,7 +164,50 @@ const DetailRadiologi = ({ route,navigation }) => {
     const [isModalVisible, setModalVisible] = useState(false);
 
     const toggleModal = () => {
-        setModalVisible(!isModalVisible);
+        const pnjidPDF = encDataDetailRadiologi.pnjid
+        const pnjsPDF  = encDataDetailRadiologi.pnjs
+        const pnjvPDF  = encDataDetailRadiologi.pnjv
+        const TOKEN    = TOKN
+        
+        // setModalVisible(!isModalVisible); // digunakan untuk menampilkan modal
+
+        // console.log(TOKEN)
+
+        baseURL.get(`cetakLabResult/?lab=radiologi&pnjid=${pnjidPDF}&pnjiv=${pnjvPDF}&pnjs=${pnjsPDF}`,{
+            headers: { 
+                'x-authorization-token-sipp': TOKEN,
+            }
+        })
+        .then((response) => {
+            console.log("DATA PDF")
+            // console.log(response.data.response)
+
+            // const path = RNFS.DocumentDirectoryPath + '/PATOLOGI_KLINIK.pdf';
+            const path = RNFS.ExternalStorageDirectoryPath + '/PATOLOGI_KLINIK.pdf';
+
+            // Tulis base64 ke file
+            RNFS.writeFile(path, response.data.response, 'base64')
+            .then(() => {
+                console.log('File disimpan di:', path);
+
+                // Bagikan atau buka file
+                // Share.open({
+                // title: 'PATOLOGI KLINIK',
+                // url: 'file://' + path,
+                // type: 'application/pdf',
+                // })
+                // .then((res) => console.log(res))
+                // .catch((err) => console.log(err));
+            })
+            .catch((err) => console.log(err));
+
+        })
+        .catch((error) => {
+            console.log(error);
+            setIsLoading(false); 
+        });
+
+        
     };
     
     return (
@@ -187,7 +262,7 @@ const DetailRadiologi = ({ route,navigation }) => {
                             ) : (
 
                                 dataDetailRadiologi.map((item, index) => { 
-                                    console.log(item)
+                                    // console.log(item)
                                     let dokter_perujuk = (item.nama_pegawai != null) ? item.nama_pegawai : '-';
                                     let tgl_kirimpasien = (item.tgl_kirimpasien != null) ? moment(item.tgl_kirimpasien).format('LLLL') : '-';
                                     let diagnosa_icdx = (item.diagnosa_nama != null) ? ('( '+item.diagnosa_kode + ') ' +item.diagnosa_nama) : '-';
