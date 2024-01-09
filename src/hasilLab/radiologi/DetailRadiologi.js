@@ -183,23 +183,35 @@ const DetailRadiologi = ({ route,navigation }) => {
             // console.log(response.data.response)
 
             // const path = RNFS.DocumentDirectoryPath + '/PATOLOGI_KLINIK.pdf';
-            const path = RNFS.ExternalStorageDirectoryPath + '/PATOLOGI_KLINIK.pdf';
+            // const path = RNFS.ExternalStorageDirectoryPath + '/PATOLOGI_KLINIK.pdf';
 
-            // Tulis base64 ke file
-            RNFS.writeFile(path, response.data.response, 'base64')
-            .then(() => {
-                console.log('File disimpan di:', path);
+            const downloadFolderPath = RNFS.DownloadDirectoryPath;
 
-                // Bagikan atau buka file
-                // Share.open({
-                // title: 'PATOLOGI KLINIK',
-                // url: 'file://' + path,
-                // type: 'application/pdf',
-                // })
-                // .then((res) => console.log(res))
-                // .catch((err) => console.log(err));
-            })
-            .catch((err) => console.log(err));
+            const saveToDownloadFolder = async (fileName) => {
+            const path = `${downloadFolderPath}/${fileName}`;
+
+                try {
+                    // Tulis base64 ke file
+                    RNFS.writeFile(path, response.data.response, 'base64')
+                    .then(() => {
+                        console.log('File disimpan di:', path);
+
+                        // Bagikan atau buka file
+                        Share.open({
+                        title: 'PATOLOGI KLINIK',
+                        url: 'file://' + path,
+                        type: 'application/pdf',
+                        })
+                        .then((res) => console.log(res))
+                        .catch((err) => console.log(err));
+                    })
+                    .catch((err) => console.log(err));
+                } catch (error) {
+                    console.error(`Error writing file: ${error.message}`);
+                }
+            };
+
+            saveToDownloadFolder('PATOLOGI_KLINIK.pdf')
 
         })
         .catch((error) => {
